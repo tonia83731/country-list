@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { getCountriesByCode } from "../api/getCountryData";
 import { CountryItem } from "../types/response-type";
 import Loading from "../components/Loading";
+import { formattedNum } from "../helpers/formattedNum";
 
 type BorderCountryObj = {
   name: string;
@@ -109,7 +110,10 @@ export default function DetailPage() {
                   </div>
                   <div className="">
                     Population:{" "}
-                    <span className="ml-1 font-light">{data?.population}</span>
+                    <span className="ml-1 font-light">
+                      {typeof data?.population === "number" &&
+                        formattedNum(data?.population)}
+                    </span>
                   </div>
                   <div className="">
                     Region:{" "}

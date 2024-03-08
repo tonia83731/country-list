@@ -7,14 +7,7 @@ import { ITableData } from "../types/table-type";
 import { getAllCountries } from "../api/getCountryData";
 import { CountryItem } from "../types/response-type";
 import CountryTable from "../components/CountryTable";
-// import {
-//   createColumnHelper,
-//   flexRender,
-//   getCoreRowModel,
-//   useReactTable,
-//   getSortedRowModel,
-//   SortingState,
-// } from "@tanstack/react-table";
+import { formattedNum } from "../helpers/formattedNum";
 
 export default function TablePage() {
   const { currentMode } = useThemeContext();
@@ -24,14 +17,16 @@ export default function TablePage() {
     const getAllCountriesAsync = async () => {
       const datas = await getAllCountries();
       const table = datas.map((data: CountryItem): ITableData => {
+        const formattedPopulation = formattedNum(data.population);
+        const formattedARea = formattedNum(data.area);
         const object: ITableData = {
           ccn3: data.ccn3,
           cca3: data.cca3,
           region: data.region,
           official_name: data.name?.official,
           captial: data.capital,
-          population: data.population,
-          area: data.area,
+          population: formattedPopulation,
+          area: formattedARea,
         };
         return object;
       });

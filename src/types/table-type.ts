@@ -4,8 +4,8 @@ export interface ITableData {
   region: string;
   official_name: string;
   captial: string[];
-  population: number;
-  area: number;
+  population: string;
+  area: string;
 }
 
 export const TABLENAMEORDER = [

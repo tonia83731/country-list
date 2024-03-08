@@ -1,5 +1,6 @@
 import { useThemeContext } from "../context/ThemeContext";
 import { CountryItem } from "../types/response-type";
+import { formattedNum } from "../helpers/formattedNum";
 
 type Card_props = {
   country: CountryItem;
@@ -24,7 +25,8 @@ export default function CountryCard(props: Card_props) {
         </h5>
         <div className="mt-6 text-sm font-semibold">
           <div className="">
-            Population: <span className="font-light">{population}</span>
+            Population:{" "}
+            <span className="font-light">{formattedNum(population)}</span>
           </div>
           <div className="">
             Region: <span className="font-light">{region}</span>
