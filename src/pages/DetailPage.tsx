@@ -44,7 +44,7 @@ export default function DetailPage() {
       <Link
         key={con.param}
         to={`/detail/${con.param}`}
-        className={`${currentMode.I_background} ${currentMode.shadow} rounded-sm px-7 py-2 mr-2 w-40 h-10 truncate`}
+        className={`${currentMode.I_background} ${currentMode.shadow} rounded-sm px-7 py-2 mr-2 h-10 truncate text-center`}
       >
         {con.name}
       </Link>
@@ -75,7 +75,7 @@ export default function DetailPage() {
       }
     };
     getCountriesByCodeAsync();
-  }, []);
+  }, [id]);
   return (
     <>
       <Link
@@ -146,11 +146,18 @@ export default function DetailPage() {
                   </div>
                 </div>
               </div>
-              <div className="pt-8 flex md:flex-col">
+              <div className="pt-8 flex flex-col">
                 <div className="font-semibold">Border Countries:</div>
-                <div className="ml-1 mt-4 flex gap-2">
+                {data?.borders === undefined ? (
+                  <div className="ml-1 mt-4">-</div>
+                ) : (
+                  <div className="w-full mt-4 grid grid-cols-2 gap-4 900:grid-cols-3">
+                    {renderBorderCountry}
+                  </div>
+                )}
+                {/* <div className="ml-1 mt-4 flex gap-2">
                   {data?.borders === undefined ? "-" : renderBorderCountry}
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

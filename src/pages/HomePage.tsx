@@ -13,8 +13,12 @@ import { Link } from "react-router-dom";
 import { CountryItem } from "../types/response-type";
 import { useInputContext } from "../context/InputContext";
 import Loading from "../components/Loading";
+import { useThemeContext } from "../context/ThemeContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTable } from "@fortawesome/free-solid-svg-icons";
 
 export default function HomePage() {
+  const { currentMode } = useThemeContext();
   const { searchInput, setSearchInput, setSelectOption } = useInputContext();
   const [countryList, setCountryList] = useState<CountryItem[]>([]);
   const countryLength = countryList?.length;
@@ -85,8 +89,15 @@ export default function HomePage() {
   return (
     <>
       <div className="md:flex md:justify-between md:items-center">
-        <div className="">
+        <div className="flex gap-2 items-center">
           <SearchBar onSearchClick={handleSearchClick} />
+          <Link
+            to="/table"
+            title="To Table"
+            className={`${currentMode.I_background} ${currentMode.shadow} rounded-[5px] px-6 h-12 flex justify-between items-center text-lg`}
+          >
+            <FontAwesomeIcon icon={faTable} />
+          </Link>
         </div>
         <div className="mt-10 md:mt-0 md:w-[200px]">
           <Dropdown onOptionChange={handleOptionChange} />
