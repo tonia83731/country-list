@@ -86,7 +86,10 @@ export default function CountryTable(props: Coun_Table_props) {
             >
               {row.getVisibleCells().map((cell, index) => {
                 return (
-                  <td className={`${index <= 3 ? "px-2" : ""}`} key={cell.id}>
+                  <td
+                    className={`${index <= 3 ? "px-2 text-center" : ""} h-12`}
+                    key={cell.id}
+                  >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 );
