@@ -112,7 +112,7 @@ export default function HomePage() {
               // console.log(country);
               return (
                 <Link
-                  to={`/detail/${country?.ccn3}`}
+                  to={`/detail/${country?.cca3}`}
                   key={`country-${index}`}
                   className=""
                 >

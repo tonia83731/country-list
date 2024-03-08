@@ -65,7 +65,7 @@ export default function DetailPage() {
               const borderData = await getCountriesByCode(border);
               const obj = {
                 name: borderData[0].name.official,
-                param: borderData[0].ccn3,
+                param: borderData[0].cca3,
               };
               return obj;
             })

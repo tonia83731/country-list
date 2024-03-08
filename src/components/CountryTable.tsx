@@ -11,22 +11,22 @@ import {
   flexRender,
   getCoreRowModel,
   useReactTable,
+  getSortedRowModel,
+  SortingState,
 } from "@tanstack/react-table";
+import { useState } from "react";
 import { TABLENAMEORDER, TABLENAMEORDERMAP } from "../types/table-type";
 import { ITableData } from "../types/table-type";
 import { useThemeContext } from "../context/ThemeContext";
+import { Link } from "react-router-dom";
 type Coun_Table_props = {
   tableData: ITableData[];
 };
-// interface Default_Col {
-//   header: string;
-//   accessorKey: string;
-//   cell: (info: any) => void;
-// }
 
 export default function CountryTable(props: Coun_Table_props) {
   const { currentMode } = useThemeContext();
   const { tableData } = props;
+  const [sorting, setSorting] = useState<SortingState>([]);
   const columnHelper = createColumnHelper();
 
   //   const sortKeys = tableData[0]
@@ -48,6 +48,12 @@ export default function CountryTable(props: Coun_Table_props) {
     data: tableData,
     columns: defaultColumns,
     getCoreRowModel: getCoreRowModel(),
+    state: {
+      sorting: sorting,
+    },
+    onSortingChange: setSorting,
+    getSortedRowModel: getSortedRowModel(),
+    debugTable: true,
   });
 
   return (
@@ -61,7 +67,11 @@ export default function CountryTable(props: Coun_Table_props) {
             <tr key={headerGroup.id} className="">
               {headerGroup.headers.map((header) => {
                 return (
-                  <th key={header.id}>
+                  <th
+                    key={header.id}
+                    {...{ onClick: header.column.getToggleSortingHandler() }}
+                    className="cursor-pointer"
+                  >
                     {flexRender(
                       header.column.columnDef.header,
                       header.getContext()
@@ -87,10 +97,24 @@ export default function CountryTable(props: Coun_Table_props) {
               {row.getVisibleCells().map((cell, index) => {
                 return (
                   <td
-                    className={`${index <= 3 ? "px-2 text-center" : ""} h-12`}
+                    className={`${
+                      index <= 3 || index >= TABLENAMEORDER.length - 2
+                        ? "px-2 text-center"
+                        : ""
+                    } h-12`}
                     key={cell.id}
                   >
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    {index === 1 ? (
+                      <Link to={`/detail/${cell.row.original?.cca3}`}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </Link>
+                    ) : (
+                      flexRender(cell.column.columnDef.cell, cell.getContext())
+                    )}
+                    {/* {flexRender(cell.column.columnDef.cell, cell.getContext())} */}
                   </td>
                 );
               })}
