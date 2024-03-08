@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   createColumnHelper,
   flexRender,
@@ -6,6 +7,7 @@ import {
   getSortedRowModel,
   SortingState,
   getPaginationRowModel,
+  ColumnDef,
 } from "@tanstack/react-table";
 import { useState } from "react";
 import { TABLENAMEORDER, TABLENAMEORDERMAP } from "../types/table-type";
@@ -24,6 +26,8 @@ type Coun_Table_props = {
   tableData: ITableData[];
 };
 
+type GenericColumnDef = ColumnDef<unknown, any>;
+
 export default function CountryTable(props: Coun_Table_props) {
   const { currentMode } = useThemeContext();
   const { tableData } = props;
@@ -34,18 +38,22 @@ export default function CountryTable(props: Coun_Table_props) {
   });
   const columnHelper = createColumnHelper();
 
-  const defaultColumns = TABLENAMEORDER.map((key: string) => {
-    return columnHelper.accessor(key, {
-      header: `${TABLENAMEORDERMAP.get(key)}`,
-      cell: (info) => {
-        return info.getValue();
-      },
-    });
-  });
+  const columns: GenericColumnDef[] = TABLENAMEORDER.map(
+    (key: string): GenericColumnDef => {
+      const column = columnHelper.accessor(key, {
+        header: `${TABLENAMEORDERMAP.get(key)}`,
+        cell: (info) => {
+          return info.getValue();
+        },
+        // accessorFn: (data: any) => data[key],
+      });
+      return column as GenericColumnDef;
+    }
+  );
 
   const table = useReactTable({
     data: tableData,
-    columns: defaultColumns,
+    columns,
     getCoreRowModel: getCoreRowModel(),
     state: {
       sorting: sorting,
