@@ -99,6 +99,7 @@ export default function CountryTable(props: Coun_Table_props) {
                 key={row.id}
               >
                 {row.getVisibleCells().map((cell, index) => {
+                  const { cca3 } = cell.row.original as { cca3: string };
                   return (
                     <td
                       className={`${
@@ -109,7 +110,7 @@ export default function CountryTable(props: Coun_Table_props) {
                       key={cell.id}
                     >
                       {index === 1 ? (
-                        <Link to={`/detail/${cell.row.original?.cca3}`}>
+                        <Link to={`/detail/${cca3}`}>
                           {flexRender(
                             cell.column.columnDef.cell,
                             cell.getContext()
