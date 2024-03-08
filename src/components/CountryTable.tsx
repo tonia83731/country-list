@@ -52,7 +52,7 @@ export default function CountryTable(props: Coun_Table_props) {
 
   return (
     <table
-      className={`w-full border-spacing-0 border-separate rounded-[5px] ${currentMode.shadow}`}
+      className={`w-full border-spacing-0 border-separate rounded-md ${currentMode.shadow}`}
     >
       <thead className={`${currentMode.TH_background} h-10`}>
         {table.getHeaderGroups().map((headerGroup) => {
