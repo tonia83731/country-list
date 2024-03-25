@@ -61,6 +61,9 @@ export default function Dropdown(props: Dropdown_props) {
                 onChange={() => {
                   onOptionChange(region);
                   setIsOpen(false);
+                  window.gtag("event", "region_filter", {
+                    region_name: region,
+                  });
                 }}
               />
               <label htmlFor={region.toLowerCase()} className="cursor-pointer">

@@ -57,7 +57,9 @@ export default function HomePage() {
     if (!searchInput || searchInput.trim() === "") return;
     const searchValue = searchInput.trim().toLowerCase();
     const searchData = await getCountriesByName(searchValue);
-    // console.log(searchData);
+    window.gtag("event", "country_search", {
+      search_text: searchValue,
+    });
     if (searchData) {
       setIsLoading(false);
       setCountryList(searchData);
@@ -95,6 +97,12 @@ export default function HomePage() {
             to="/table"
             title="To Table"
             className={`${currentMode.I_background} ${currentMode.shadow} rounded-[5px] px-6 h-12 flex justify-between items-center text-lg`}
+            onClick={() => {
+              window.gtag("event", "link_click", {
+                link_text: "To Table",
+                link_url: "/table",
+              });
+            }}
           >
             <FontAwesomeIcon icon={faTable} />
           </Link>
